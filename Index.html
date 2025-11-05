@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tú Comprita - Tienda Online</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --verde: #2e7d32;
+    --amarillo: #ffeb3b;
+    --blanco: #ffffff;
+    --gris: #f5f5f5;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--gris);
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  header {
+    background: linear-gradient(90deg, var(--amarillo), var(--verde));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    color: var(--blanco);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  }
+
+  header img {
+    height: 60px;
+  }
+
+  header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .cart-btn {
+    background-color: var(--blanco);
+    color: var(--verde);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    font-weight: 600;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .cart-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--amarillo);
+  }
+
+  main {
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .product {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .product:hover {
+    transform: translateY(-5px);
+  }
+
+  .product img {
+    width: 100%;
+    max-width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .product h3 {
+    margin: 15px 0 5px;
+    color: var(--verde);
+  }
+
+  .product p {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .product button {
+    background-color: var(--verde);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+  }
+
+  .product button:hover {
+    background-color: #256226;
+  }
+
+  section {
+    display: none;
+    padding: 30px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  #checkout-btn, #send-btn {
+    background-color: var(--verde);
+    color: var(--blanco);
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+  }
+
+  #checkout-btn:hover, #send-btn:hover {
+    background-color: #256226;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+  }
+
+  .popup-content {
+    background: var(--blanco);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .popup-content button {
+    background-color: var(--verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .popup-content button:hover {
+    background-color: #256226;
+  }
+
+  footer {
+    background-color: var(--verde);
+    color: var(--blanco);
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="https://drive.google.com/uc?export=view&id=1dJBkMXpbVXY2dQQbW-BHALGsRPCBIGYa" alt="Logo Tú Comprita">
+  <h1>Tú Comprita</h1>
+  <button class="cart-btn" onclick="showCart()">🛒 Carrito (<span id='cart-count'>0</span>)</button>
+</header>
+
+<main id="product-section">
+  <div class="product">
+    <img src="https://drive.google.com/uc?export=view&id=1lBk94vo9qvFhAL7qpKKmqouJSzESjAE0" alt="Arroz Energy">
+    <h3>Arroz Energy</h3>
+    <p>Arroz importado de 1kg.</p>
+    <p><strong>$1.50</strong></p>
+    <button onclick="addToCart('Arroz Energy', 1.50)">Agregar al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="https://drive.google.com/uc?export=view&id=1zO0-h09aG2xL_rPZMzHG8qPEkUhU3WWF" alt="Azúcar Blanca">
+    <h3>Azúcar Blanca</h3>
+    <p>Azúcar blanca cristalina.</p>
+    <p><strong>$2.00</strong></p>
+    <button onclick="addToCart('Azúcar Blanca', 2.00)">Agregar al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="https://drive.google.com/uc?export=view&id=1YpxHjxCnzbX2AYxrPRdqZdgU7SNCk-Xo" alt="Aceite Lucy">
+    <h3>Aceite Lucy</h3>
+    <p>Aceite oscuro marca Lucy.</p>
+    <p><strong>$3.00</strong></p>
+    <button onclick="addToCart('Aceite Lucy', 3.00)">Agregar al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="https://drive.google.com/uc?export=view&id=1rr14CDHvJukk469DY2GuVTg535s7HSsj" alt="Pasta de tomate Ada">
+    <h3>Pasta de tomate Ada</h3>
+    <p>Pasta de tomate marca Ada.</p>
+    <p><strong>$1.50</strong></p>
+    <button onclick="addToCart('Pasta de tomate Ada', 1.50)">Agregar al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="https://drive.google.com/uc?export=view&id=1nyOUR-W4ACvI44kTtV7pXEx2HsAuK9Se" alt="Espaguetti Lucy">
+    <h3>Espaguetti Lucy</h3>
+    <p>Espagueti italiano marca Lucy (500g)</p>
+    <p><strong>$0.85</strong></p>
+    <button onclick="addToCart('Espaguetti Lucy', 0.85)">Agregar al carrito</button>
+  </div>
+</main>
+
+<section id="cart-section">
+  <h2>🛒 Tu carrito</h2>
+  <table id="cart-table">
+    <thead><tr><th>Producto</th><th>Precio</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p><strong>Total: $<span id="cart-total">0.00</span></strong></p>
+  <button id="checkout-btn" onclick="showForm()">Realizar Pedido</button>
+</section>
+
+<section id="form-section">
+  <h2>📦 Rellenar datos de envío</h2>
+  <label>Dirección:</label>
+  <input type="text" id="direccion"><br><br>
+  <label>Número de teléfono:</label>
+  <input type="text" id="telefono"><br><br>
+  <button id="send-btn" onclick="showPopup()">Continuar</button>
+</section>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <p>Al pulsar en continuar no se descontará ningún dinero, solo se enviará el pedido al personal encargado para que realice la mensajería hacia su destino.</p>
+    <button onclick="sendOrder('email')">Enviar por Email</button>
+    <button onclick="sendOrder('whatsapp')">Enviar por WhatsApp</button>
+  </div>
+</div>
+
+<footer>
+  © 2025 Tú Comprita | Todos los derechos reservados.
+</footer>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  document.getElementById('cart-count').innerText = cart.length;
+  alert(`${name} agregado al carrito.`);
+}
+
+function showCart() {
+  document.getElementById('product-section').style.display = 'none';
+  document.getElementById('cart-section').style.display = 'block';
+  document.getElementById('form-section').style.display = 'none';
+  const tbody = document.querySelector('#cart-table tbody');
+  tbody.innerHTML = '';
+  let total = 0;
+  cart.forEach(item => {
+    tbody.innerHTML += `<tr><td>${item.name}</td><td>$${item.price.toFixed(2)}</td></tr>`;
+    total += item.price;
+  });
+  document.getElementById('cart-total').innerText = total.toFixed(2);
+}
+
+function showForm() {
+  document.getElementById('cart-section').style.display = 'none';
+  document.getElementById('form-section').style.display = 'block';
+}
+
+function showPopup() {
+  document.getElementById('popup').style.display = 'flex';
+}
+
+function sendOrder(method) {
+  const direccion = document.getElementById('direccion').value;
+  const telefono = document.getElementById('telefono').value;
+  let orderDetails = "🛍️ Pedido desde Tú Comprita:\n\n";
+  cart.forEach(item => orderDetails += `- ${item.name}: $${item.price}\n`);
+  orderDetails += `\nTotal: $${cart.reduce((sum, i)=>sum+i.price,0).toFixed(2)}\n\n📍 Dirección: ${direccion}\n📞 Teléfono: ${telefono}`;
+
+  if (method === 'email') {
+    window.location.href = `mailto:perezmaikel2001@gmail.com?subject=Nuevo pedido Tú Comprita&body=${encodeURIComponent(orderDetails)}`;
+  } else {
+    window.location.href = `https://wa.me/5355809409?text=${encodeURIComponent(orderDetails)}`;
+  }
+}
+</script>
+</body>
+</html>
